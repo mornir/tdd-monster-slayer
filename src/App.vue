@@ -1,28 +1,52 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <main id="app"
+        class="container mx-auto">
+
+    <section class="flex">
+
+      <Fighter name="You"
+               :life="playerLife" />
+
+      <Fighter name="Monster"
+               :life="monsterLife" />
+
+    </section>
+
+    <section>
+
+      <PlayerActions @attack="attack" />
+
+    </section>
+
+  </main>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Fighter from '@/components/Fighter'
+
+import PlayerActions from '@/components/PlayerActions'
 
 export default {
   name: 'app',
+  data() {
+    return {
+      playerLife: 100,
+      monsterLife: 100,
+    }
+  },
+  methods: {
+    attack(dmg) {
+      console.log(dmg)
+      this.monsterLife = this.monsterLife - dmg
+    },
+  },
   components: {
-    HelloWorld
-  }
+    Fighter,
+    PlayerActions,
+  },
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+@import './assets/tailwind.css';
 </style>
