@@ -4,16 +4,27 @@ import PlayerActions from '../../../src/components/PlayerActions.vue'
 describe('PlayerActions', () => {
   beforeEach(mountVue(PlayerActions))
 
-  it('emits an attack', () => {
+  it('emits a normal attack', () => {
     const spy = cy.spy()
 
     Cypress.vue.$on('attack', spy)
 
-    cy.get('button')
+    cy.get('[data-cy="attack"]')
       .click()
       .then(() => {
         expect(spy).to.be.calledOnce
-        expect(spy).to.be.calledWith(5)
+      })
+  })
+
+  it('emits a special attack', () => {
+    const spy = cy.spy()
+
+    Cypress.vue.$on('specialAttack', spy)
+
+    cy.get('[data-cy="special-attack"]')
+      .click()
+      .then(() => {
+        expect(spy).to.be.calledOnce
       })
   })
 })

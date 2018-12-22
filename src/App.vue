@@ -14,7 +14,8 @@
 
     <section>
 
-      <PlayerActions @attack="attack" />
+      <PlayerActions @attack="attack"
+                     @specialAttack="specialAttack" />
 
     </section>
 
@@ -36,7 +37,9 @@ export default {
   },
   methods: {
     attack(dmg) {
-      console.log(dmg)
+      this.monsterLife = this.monsterLife - dmg
+    },
+    specialAttack(dmg) {
       this.monsterLife = this.monsterLife - dmg
     },
   },
