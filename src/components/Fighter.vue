@@ -12,6 +12,7 @@
 <script>
 import LifeBar from '@/components/LifeBar'
 export default {
+  name: 'Fighter',
   props: {
     name: {
       type: String,

@@ -11,6 +11,7 @@
 
 <script>
 export default {
+  name: 'LifeBar',
   props: {
     totalHealth: {
       type: Number,
