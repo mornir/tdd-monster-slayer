@@ -29,7 +29,7 @@ export default {
       this.$emit('specialAttack', dmg)
     },
     heal() {
-      this.$emit('heal', 10)
+      this.$emit('heal')
     },
   },
 }

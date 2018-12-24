@@ -46,7 +46,13 @@ export default {
       this.monsterAttack()
     },
     heal() {
-      this.playerLife = this.playerLife + 10
+      const diff = 100 - this.playerLife
+
+      if (diff >= 10) {
+        this.playerLife = this.playerLife + 10
+      } else {
+        this.playerLife = this.playerLife + diff
+      }
       this.monsterAttack()
     },
     monsterAttack() {

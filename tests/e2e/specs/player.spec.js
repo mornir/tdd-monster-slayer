@@ -29,14 +29,4 @@ describe('Playthrough', () => {
     cy.get('[data-cy="special-attack"]').click()
     cy.get('[data-cy="Monster-lifebar"]').should('have.css', 'width', '100px')
   })
-
-  /*  it.only('heals the player', () => {
-    cy.get('[data-cy="heal"]').click()
-
-    cy.get('[data-cy="Monster-lifebar"]').should(
-      'not.have.css',
-      'width',
-      '100px'
-    )
-  }) */
 })
