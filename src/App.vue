@@ -15,7 +15,8 @@
     <section>
 
       <PlayerActions @attack="attack"
-                     @specialAttack="specialAttack" />
+                     @specialAttack="specialAttack"
+                     @heal="heal" />
 
     </section>
 
@@ -41,6 +42,9 @@ export default {
     },
     specialAttack(dmg) {
       this.monsterLife = this.monsterLife - dmg
+    },
+    heal() {
+      this.playerLife = this.playerLife + 10
     },
   },
   components: {
