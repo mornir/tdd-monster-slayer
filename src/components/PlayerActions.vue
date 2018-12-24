@@ -4,21 +4,22 @@
             @click="attack">Attack</button>
     <button data-cy="special-attack"
             @click="specialAttack">Special Attack</button>
+    <button data-cy="heal"
+            @click="heal">Heal</button>
 
   </div>
 </template>
 
 <script>
-import random from 'lodash.random'
-
 export default {
+  name: 'PlayerActions',
   methods: {
     attack() {
-      const dmg = random(5, 10)
+      const dmg = Math.floor(Math.random() * 6) + 5
       this.$emit('attack', dmg)
     },
     specialAttack() {
-      const rnd = random(0, 1)
+      const rnd = Math.floor(Math.random() * 2)
       let dmg
       if (rnd === 1) {
         dmg = 20
@@ -26,6 +27,9 @@ export default {
         dmg = 0
       }
       this.$emit('specialAttack', dmg)
+    },
+    heal() {
+      this.$emit('heal', 10)
     },
   },
 }
