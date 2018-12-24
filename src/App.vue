@@ -39,12 +39,19 @@ export default {
   methods: {
     attack(dmg) {
       this.monsterLife = this.monsterLife - dmg
+      this.monsterAttack()
     },
     specialAttack(dmg) {
       this.monsterLife = this.monsterLife - dmg
+      this.monsterAttack()
     },
     heal() {
       this.playerLife = this.playerLife + 10
+      this.monsterAttack()
+    },
+    monsterAttack() {
+      const dmg = Math.floor(Math.random() * 6) + 5
+      this.playerLife = this.playerLife - dmg
     },
   },
   components: {

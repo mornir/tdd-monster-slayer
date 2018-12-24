@@ -12,6 +12,7 @@ describe('MainApp', () => {
     const dmg = 5
     const rest = data.monsterLife - dmg
 
+    // Here we called the attack method directly
     Cypress.vue.attack(dmg)
 
     expect(Cypress.vue.monsterLife).to.equal(rest)
@@ -26,9 +27,21 @@ describe('MainApp', () => {
     let actions = Cypress.vue.$children.find(
       comp => comp.$options.name === 'PlayerActions'
     )
+
+    // This approach is better: we emit our custom event from the PlayerActions component
     actions.$emit('heal')
 
     expect(Cypress.vue.playerLife).to.equal(80)
     cy.get('[data-cy="You-lifebar"]').should('have.css', 'width', '80px')
+  })
+
+  it.only('Monster always fight back', () => {
+    const spy = cy.spy(Cypress.vue, 'monsterAttack')
+
+    cy.get('button')
+      .click({ multiple: true })
+      .then(() => {
+        expect(spy).to.be.calledThrice
+      })
   })
 })
