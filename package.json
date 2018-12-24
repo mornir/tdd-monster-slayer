@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test": "vue-cli-service test:e2e",
-    "test:unit": "vue-cli-service test:e2e --headless --no-exit --spec tests/e2e/specs/App.spec.js"
+    "test:unit": "vue-cli-service test:e2e --headless --spec tests/e2e/specs/integration/App.spec.js"
   },
   "dependencies": {
     "vue": "^2.5.17"
