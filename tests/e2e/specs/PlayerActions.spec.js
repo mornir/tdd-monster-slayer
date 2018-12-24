@@ -1,3 +1,7 @@
+/*
+IMO, this test suite is not useful. It is too low level and the features tested here are already covered in the acceptance test.
+*/
+
 import mountVue from 'cypress-vue-unit-test'
 import PlayerActions from '../../../src/components/PlayerActions.vue'
 
