@@ -1,42 +1,58 @@
 import mountVue from 'cypress-vue-unit-test'
 import MainApp from '../../../src/App.vue'
+import VModal from 'vue-js-modal'
+
+import { getMonsterLifeBar, getPlayerLifeBar } from '../support/utils'
 
 const data = {
   playerLife: 70,
   monsterLife: 80,
 }
 
+/* const components = {
+  modal: VModal,
+}
+ 
+const extensions = {
+  components,
+}*/
+
+const use = [VModal]
+// extend Vue with plugins
+const extensions = {
+  use,
+}
+
+function doNothing() {
+  cy.log('The monster does not fight back.')
+}
+
 describe('MainApp', () => {
-  beforeEach(mountVue(MainApp, { data }))
+  beforeEach(mountVue(MainApp, { data }, { extensions }))
 
   it('deals 5 dmg to monster', () => {
     const dmg = 5
     const rest = data.monsterLife - dmg
 
-    // Here we called the attack method directly
+    // Here we call the attack method directly
     Cypress.vue.attack(dmg)
 
+    // A better approach is to emit an event from the child compoment
+
+    /* 
     let actions = Cypress.vue.$children.find(
       comp => comp.$options.name === 'PlayerActions'
-    )
-
-    // This approach is better: we emit our custom event from the PlayerActions component
+    )    
+    
     actions.$emit('heal')
+    */
 
     expect(Cypress.vue.monsterLife).to.equal(rest)
-    cy.get('[data-cy="Monster-lifebar"]').should(
-      'have.css',
-      'width',
-      `${rest}px`
-    )
+    getMonsterLifeBar().contains(rest)
   })
 
   it('heals the player', () => {
     Cypress.vue.playerLife = 70
-
-    function doNothing() {
-      console.log('Monster do not fight back')
-    }
 
     cy.stub(Cypress.vue, 'monsterAttack', doNothing)
 
@@ -44,11 +60,10 @@ describe('MainApp', () => {
       comp => comp.$options.name === 'PlayerActions'
     )
 
-    // This approach is better: we emit our custom event from the PlayerActions component
     actions.$emit('heal')
 
     expect(Cypress.vue.playerLife).to.equal(80)
-    cy.get('[data-cy="You-lifebar"]').should('have.css', 'width', '80px')
+    getPlayerLifeBar().contains(80)
   })
 
   it('Monster always fight back', () => {
@@ -62,13 +77,21 @@ describe('MainApp', () => {
   })
 
   it('cannot heal more than 100 life', () => {
-    function doNothing() {
-      console.log('Monster do not fight back')
-    }
-
     cy.stub(Cypress.vue, 'monsterAttack', doNothing)
     Cypress.vue.playerLife = 95
     Cypress.vue.heal()
     expect(Cypress.vue.playerLife).to.equal(100)
+  })
+
+  it.only('ends game when monster dies', () => {
+    Cypress.vue.monsterLife = 1
+    cy.contains('You have slain the monster!').should('not.be.visible')
+    cy.get('[data-cy="attack"]')
+      .click()
+      .then(() => {
+        expect(Cypress.vue.monsterLife).to.equal(0)
+        getMonsterLifeBar().contains(0)
+        cy.contains('You have slain the monster!')
+      })
   })
 })

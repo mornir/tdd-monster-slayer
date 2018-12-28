@@ -2,8 +2,8 @@
   <div class="bg-grey">
     <div class="bg-green h-4"
          :style="health"
-         :data-cy="`${name}-lifebar`">
-
+         data-cy="lifebar">
+      {{ Math.round(totalHealth) }}
     </div>
   </div>
 
@@ -25,7 +25,7 @@ export default {
   computed: {
     health() {
       return {
-        width: this.totalHealth + 'px',
+        width: this.totalHealth + '%',
       }
     },
   },

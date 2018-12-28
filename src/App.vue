@@ -8,11 +8,13 @@
       <section class="flex">
 
         <Fighter name="You"
+                 data-cy="player"
                  class="mr-8"
                  :life="playerLife"
                  img="warrior_tiny.png" />
 
         <Fighter name="Hydra"
+                 data-cy="monster"
                  :life="monsterLife"
                  img="hydra.jpg" />
 
@@ -26,6 +28,9 @@
 
       </section>
     </main>
+    <modal name="win">
+      You have slain the monster!
+    </modal>
   </div>
 </template>
 
@@ -63,7 +68,21 @@ export default {
     },
     monsterAttack() {
       const dmg = Math.floor(Math.random() * 6) + 5
-      this.playerLife = this.playerLife - dmg
+
+      if (this.playerLife > dmg) {
+        this.playerLife = this.playerLife - dmg
+      } else {
+        this.gameOver()
+      }
+    },
+    gameOver() {},
+  },
+  watch: {
+    monsterLife(newVal) {
+      if (newVal <= 0) {
+        this.monsterLife = 0
+        this.$modal.show('win')
+      }
     },
   },
   components: {
