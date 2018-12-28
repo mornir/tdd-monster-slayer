@@ -1,3 +1,5 @@
+import { getMonsterLifeBar } from '../support/utils'
+
 describe('Playthrough', () => {
   beforeEach(() => {
     cy.visit('/')
@@ -9,7 +11,8 @@ describe('Playthrough', () => {
     })
 
     cy.get('[data-cy="attack"]').click()
-    cy.get('[data-cy="Monster-lifebar"]').should('have.css', 'width', '95px')
+
+    getMonsterLifeBar().contains(95)
   })
 
   it('deals 20 dmg to the monster', () => {
@@ -18,7 +21,7 @@ describe('Playthrough', () => {
     })
 
     cy.get('[data-cy="special-attack"]').click()
-    cy.get('[data-cy="Monster-lifebar"]').should('have.css', 'width', '80px')
+    getMonsterLifeBar().contains(80)
   })
 
   it('deals 0 dmg to the monster', () => {
@@ -27,6 +30,6 @@ describe('Playthrough', () => {
     })
 
     cy.get('[data-cy="special-attack"]').click()
-    cy.get('[data-cy="Monster-lifebar"]').should('have.css', 'width', '100px')
+    getMonsterLifeBar().contains(100)
   })
 })
