@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="bg-grey">
     <div class="bg-green h-4"
          :style="health"
          :data-cy="`${name}-lifebar`">

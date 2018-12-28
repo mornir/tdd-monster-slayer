@@ -1,10 +1,13 @@
 <template>
-  <div>
+  <div class="my-6">
     <button data-cy="attack"
+            class="btn bg-orange-light"
             @click="attack">Attack</button>
     <button data-cy="special-attack"
+            class="btn bg-yellow-light mx-4"
             @click="specialAttack">Special Attack</button>
     <button data-cy="heal"
+            class="btn bg-green-light"
             @click="heal">Heal</button>
 
   </div>
@@ -36,4 +39,7 @@ export default {
 </script>
 
 <style>
+button {
+  @apply bg-blue;
+}
 </style>

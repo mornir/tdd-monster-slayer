@@ -1,26 +1,32 @@
 <template>
-  <main id="app"
-        class="container mx-auto">
+  <div id="app">
+    <main class="flex flex-col justify-center items-center h-screen">
+      <section class="mb-4">
+        <h1 class="text-4xl tracking-wide uppercase">Monster Slayer</h1>
+      </section>
 
-    <section class="flex">
+      <section class="flex">
 
-      <Fighter name="You"
-               :life="playerLife" />
+        <Fighter name="You"
+                 class="mr-8"
+                 :life="playerLife"
+                 img="warrior_tiny.png" />
 
-      <Fighter name="Monster"
-               :life="monsterLife" />
+        <Fighter name="Hydra"
+                 :life="monsterLife"
+                 img="hydra.jpg" />
 
-    </section>
+      </section>
 
-    <section>
+      <section>
 
-      <PlayerActions @attack="attack"
-                     @specialAttack="specialAttack"
-                     @heal="heal" />
+        <PlayerActions @attack="attack"
+                       @specialAttack="specialAttack"
+                       @heal="heal" />
 
-    </section>
-
-  </main>
+      </section>
+    </main>
+  </div>
 </template>
 
 <script>
@@ -69,4 +75,11 @@ export default {
 
 <style>
 @import './assets/tailwind.css';
+
+@import url('https://fonts.googleapis.com/css?family=Pangolin');
+
+h1,
+.figher-name {
+  font-family: 'Pangolin', cursive;
+}
 </style>
