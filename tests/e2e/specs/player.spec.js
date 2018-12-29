@@ -32,4 +32,22 @@ describe('Playthrough', () => {
     cy.get('[data-cy="special-attack"]').click()
     getMonsterLifeBar().contains(100)
   })
+
+  it('ends game when monster dies', () => {
+    cy.window().then(win => {
+      cy.stub(win.Math, 'random').returns(0.9)
+    })
+
+    cy.contains('You have slain the monster!').should('not.be.visible')
+
+    cy.get('[data-cy="special-attack"]')
+      .click()
+      .click()
+      .click()
+      .click()
+      .click()
+
+    getMonsterLifeBar().contains(0)
+    cy.contains('You have slain the monster!')
+  })
 })

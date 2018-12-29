@@ -9,26 +9,12 @@ const data = {
   monsterLife: 80,
 }
 
-/* const components = {
-  modal: VModal,
-}
- 
-const extensions = {
-  components,
-}*/
-
-const use = [VModal]
-// extend Vue with plugins
-const extensions = {
-  use,
-}
-
 function doNothing() {
   cy.log('The monster does not fight back.')
 }
 
 describe('MainApp', () => {
-  beforeEach(mountVue(MainApp, { data }, { extensions }))
+  beforeEach(mountVue(MainApp, { data }))
 
   it('deals 5 dmg to monster', () => {
     const dmg = 5
@@ -37,7 +23,7 @@ describe('MainApp', () => {
     // Here we call the attack method directly
     Cypress.vue.attack(dmg)
 
-    // A better approach is to emit an event from the child compoment
+    // Another (better?) approach is to emit an event from the child compoment
 
     /* 
     let actions = Cypress.vue.$children.find(
@@ -52,6 +38,7 @@ describe('MainApp', () => {
   })
 
   it('heals the player', () => {
+    // TODO: open issue about data not resetting
     Cypress.vue.playerLife = 70
 
     cy.stub(Cypress.vue, 'monsterAttack', doNothing)
@@ -81,17 +68,5 @@ describe('MainApp', () => {
     Cypress.vue.playerLife = 95
     Cypress.vue.heal()
     expect(Cypress.vue.playerLife).to.equal(100)
-  })
-
-  it.only('ends game when monster dies', () => {
-    Cypress.vue.monsterLife = 1
-    cy.contains('You have slain the monster!').should('not.be.visible')
-    cy.get('[data-cy="attack"]')
-      .click()
-      .then(() => {
-        expect(Cypress.vue.monsterLife).to.equal(0)
-        getMonsterLifeBar().contains(0)
-        cy.contains('You have slain the monster!')
-      })
   })
 })
