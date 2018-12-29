@@ -38,7 +38,7 @@ describe('MainApp', () => {
   })
 
   it('heals the player', () => {
-    // TODO: open issue about data not resetting
+    // TODO: open issue about data not resettingGame Over
     Cypress.vue.playerLife = 70
 
     cy.stub(Cypress.vue, 'monsterAttack', doNothing)
@@ -64,6 +64,7 @@ describe('MainApp', () => {
   })
 
   it('cannot heal more than 100 life', () => {
+    cy.log(Cypress.vue)
     cy.stub(Cypress.vue, 'monsterAttack', doNothing)
     Cypress.vue.playerLife = 95
     Cypress.vue.heal()

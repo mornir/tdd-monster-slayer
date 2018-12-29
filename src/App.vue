@@ -27,17 +27,21 @@
                        @heal="heal" />
 
       </section>
+      <section>
+        <ActionsLog :logs="logs" />
+      </section>
+
     </main>
-    <modal name="win">
-      You have slain the monster!
+    <modal name="endGameModal">
+      {{ msg }}
     </modal>
   </div>
 </template>
 
 <script>
 import Fighter from '@/components/Fighter'
-
 import PlayerActions from '@/components/PlayerActions'
+import ActionsLog from '@/components/ActionsLog'
 
 export default {
   name: 'app',
@@ -45,11 +49,16 @@ export default {
     return {
       playerLife: 100,
       monsterLife: 100,
+      msg: '',
+      logs: [],
     }
   },
   methods: {
     attack(dmg) {
       this.monsterLife = this.monsterLife - dmg
+
+      this.createLog('player', `You dealt ${dmg} dmg to the Hydra!`)
+
       this.monsterAttack()
     },
     specialAttack(dmg) {
@@ -71,23 +80,34 @@ export default {
 
       if (this.playerLife > dmg) {
         this.playerLife = this.playerLife - dmg
+        this.createLog('monster', `The Hydra dealt ${dmg} dmg to you!`)
       } else {
-        this.gameOver()
+        this.msg = 'Game Over!'
+        this.$modal.show('endGameModal')
       }
     },
-    gameOver() {},
+    createLog(fighter, msg) {
+      this.logs.unshift({
+        fighter,
+        msg,
+        id: new Date().getTime(),
+      })
+    },
+    resetGame() {},
   },
   watch: {
     monsterLife(newVal) {
       if (newVal <= 0) {
         this.monsterLife = 0
-        this.$modal.show('win')
+        this.msg = 'You have slain the monster!'
+        this.$modal.show('endGameModal')
       }
     },
   },
   components: {
     Fighter,
     PlayerActions,
+    ActionsLog,
   },
 }
 </script>
