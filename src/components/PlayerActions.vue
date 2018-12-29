@@ -39,7 +39,4 @@ export default {
 </script>
 
 <style>
-button {
-  @apply bg-blue;
-}
 </style>
