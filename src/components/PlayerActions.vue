@@ -14,20 +14,23 @@
 </template>
 
 <script>
+import { rand } from '@/utils'
+import { player } from '@/stats'
+
 export default {
   name: 'PlayerActions',
   methods: {
     attack() {
-      const dmg = Math.floor(Math.random() * 6) + 5
+      const dmg = rand(player.attack.min, player.attack.max)
       this.$emit('attack', dmg)
     },
     specialAttack() {
-      const rnd = Math.floor(Math.random() * 2)
+      const rnd = rand(0, 1)
       let dmg
       if (rnd === 1) {
-        dmg = 20
+        dmg = player.specialAttack.max
       } else {
-        dmg = 0
+        dmg = player.specialAttack.min
       }
       this.$emit('specialAttack', dmg)
     },

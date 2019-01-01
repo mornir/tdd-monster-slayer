@@ -1,4 +1,5 @@
-import { getMonsterLifeBar } from '../support/utils'
+import { getPlayerLifeBar, getMonsterLifeBar } from '../support/utils'
+import { player } from '../../../src/stats'
 
 describe('Playthrough', () => {
   beforeEach(() => {
@@ -33,6 +34,21 @@ describe('Playthrough', () => {
     getMonsterLifeBar().contains(100)
   })
 
+  it('heals himself of 15', () => {
+    cy.window().then(win => {
+      cy.stub(win.Math, 'random').returns(0)
+    })
+
+    cy.get('[data-cy="attack"]')
+      .click()
+      .click()
+
+    cy.get('[data-cy="heal"]').click()
+
+    cy.get('[data-cy="special-attack"]').click()
+    getPlayerLifeBar().contains(95)
+  })
+
   it('ends game when monster dies', () => {
     cy.window().then(win => {
       cy.stub(win.Math, 'random').returns(0.9)
@@ -64,7 +80,7 @@ describe('Playthrough', () => {
       i++
     }
 
-    getMonsterLifeBar().contains(0)
+    getPlayerLifeBar().contains(0)
     cy.contains('Game Over!')
   })
 })

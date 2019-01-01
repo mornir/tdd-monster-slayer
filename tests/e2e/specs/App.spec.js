@@ -3,6 +3,7 @@ import MainApp from '../../../src/App.vue'
 import VModal from 'vue-js-modal'
 
 import { getMonsterLifeBar, getPlayerLifeBar } from '../support/utils'
+import { player } from '../../../src/stats'
 
 const data = {
   playerLife: 70,
@@ -37,9 +38,11 @@ describe('MainApp', () => {
     getMonsterLifeBar().contains(rest)
   })
 
-  it('heals the player', () => {
+  it(`heals the player for ${player.heal.amount}`, () => {
     // TODO: open issue about data not resettingGame Over
     Cypress.vue.playerLife = 70
+
+    const newLife = Cypress.vue.playerLife + player.heal.amount
 
     cy.stub(Cypress.vue, 'monsterAttack', doNothing)
 
@@ -49,8 +52,8 @@ describe('MainApp', () => {
 
     actions.$emit('heal')
 
-    expect(Cypress.vue.playerLife).to.equal(80)
-    getPlayerLifeBar().contains(80)
+    expect(Cypress.vue.playerLife).to.equal(newLife)
+    getPlayerLifeBar().contains(newLife)
   })
 
   it('Monster always fight back', () => {

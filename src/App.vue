@@ -43,6 +43,8 @@ import Fighter from '@/components/Fighter'
 import PlayerActions from '@/components/PlayerActions'
 import ActionsLog from '@/components/ActionsLog'
 
+import { player } from '@/stats'
+
 export default {
   name: 'app',
   data() {
@@ -69,7 +71,7 @@ export default {
       const diff = 100 - this.playerLife
 
       if (diff >= 10) {
-        this.playerLife = this.playerLife + 10
+        this.playerLife = this.playerLife + player.heal.amount
       } else {
         this.playerLife = this.playerLife + diff
       }
@@ -82,6 +84,7 @@ export default {
         this.playerLife = this.playerLife - dmg
         this.createLog('monster', `The Hydra dealt ${dmg} dmg to you!`)
       } else {
+        this.playerLife = 0
         this.msg = 'Game Over!'
         this.$modal.show('endGameModal')
       }
