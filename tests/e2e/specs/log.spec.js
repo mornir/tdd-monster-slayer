@@ -1,6 +1,6 @@
 describe('Log', () => {
   beforeEach(() => {
-    cy.visit('/')
+    cy.visit('http://localhost:8080')
   })
 
   it('displays an attack log', () => {
