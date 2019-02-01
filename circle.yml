@@ -6,3 +6,4 @@ workflows:
     jobs:
       - cypress/run:
           start: npm run serve
+          wait-on: 'http://localhost:8080'
