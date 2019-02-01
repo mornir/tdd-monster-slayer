@@ -1,4 +1,4 @@
-# tdd-monster-slayer
+# tdd-monster-slayer [![CircleCI](https://circleci.com/gh/mornir/tdd-monster-slayer.svg?style=svg)](https://circleci.com/gh/mornir/tdd-monster-slayer)
 
 ## Project setup
 

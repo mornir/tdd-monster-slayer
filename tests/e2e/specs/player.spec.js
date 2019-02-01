@@ -3,7 +3,7 @@ import { player } from '../../../src/stats'
 
 describe('Playthrough', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:8080')
+    cy.visit('/')
   })
 
   it('deals 5 dmg to the monster', () => {
